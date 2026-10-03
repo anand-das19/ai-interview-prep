@@ -26,10 +26,8 @@ services:
     autoDeploy: true
 
   # Frontend
-  - type: web
+  - type: static_site
     name: interview-ai-frontend
-    runtime: static
-    plan: free
     buildCommand: cd Frontend && npm install && npm run build
     staticPublishPath: Frontend/dist
     envVars:
