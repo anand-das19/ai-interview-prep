@@ -2,11 +2,13 @@ services:
   # Backend API
   - type: web
     name: interview-ai-backend
-    runtime: node
+    # Docker is required because Puppeteer needs the browser libraries installed
+    # by Backend/Dockerfile to generate resume PDFs reliably.
+    runtime: docker
     region: oregon
     plan: free
-    buildCommand: cd Backend && npm install
-    startCommand: cd Backend && npm start
+    dockerfilePath: ./Backend/Dockerfile
+    dockerContext: ./Backend
     envVars:
       - key: NODE_ENV
         value: production
@@ -20,7 +22,7 @@ services:
         sync: false
       - key: ALLOWED_ORIGINS
         sync: false
-    healthCheckPath: /api/auth/health
+    healthCheckPath: /health
     autoDeploy: true
 
   # Frontend

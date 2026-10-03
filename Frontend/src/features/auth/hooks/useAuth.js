@@ -15,8 +15,9 @@ export const useAuth = () => {
         try {
             const data = await login({ email, password })
             setUser(data.user)
-        } catch (err) {
-
+        } catch (error) {
+            console.error('Login failed:', error)
+            throw error
         } finally {
             setLoading(false)
         }
@@ -27,8 +28,9 @@ export const useAuth = () => {
         try {
             const data = await register({ username, email, password })
             setUser(data.user)
-        } catch (err) {
-
+        } catch (error) {
+            console.error('Registration failed:', error)
+            throw error
         } finally {
             setLoading(false)
         }
@@ -37,10 +39,11 @@ export const useAuth = () => {
     const handleLogout = async () => {
         setLoading(true)
         try {
-            const data = await logout()
+            await logout()
             setUser(null)
-        } catch (err) {
-
+        } catch (error) {
+            console.error('Logout failed:', error)
+            throw error
         } finally {
             setLoading(false)
         }
@@ -53,14 +56,17 @@ export const useAuth = () => {
 
                 const data = await getMe()
                 setUser(data.user)
-            } catch (err) { } finally {
+            } catch {
+                // An unauthenticated visitor is expected on first load.
+                setUser(null)
+            } finally {
                 setLoading(false)
             }
         }
 
         getAndSetUser()
 
-    }, [])
+    }, [setLoading, setUser])
 
     return { user, loading, handleRegister, handleLogin, handleLogout }
 }
