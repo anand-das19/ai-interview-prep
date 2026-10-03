@@ -29,7 +29,6 @@ services:
   - type: web
     name: interview-ai-frontend
     runtime: static
-    region: oregon
     plan: free
     buildCommand: cd Frontend && npm install && npm run build
     staticPublishPath: Frontend/dist
