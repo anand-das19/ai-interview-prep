@@ -5,20 +5,23 @@ import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
 
-    const { loading, handleLogin } = useAuth()
+    const { handleLogin } = useAuth()
     const navigate = useNavigate()
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
+    const [ error, setError ] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleLogin({email,password})
-        navigate('/')
-    }
+        setError("")
 
-    if(loading){
-        return (<main><h1>Loading.......</h1></main>)
+        try {
+            await handleLogin({email,password})
+            navigate('/')
+        } catch (err) {
+            setError(err.response?.data?.message || "Login failed. Please check your credentials and try again.")
+        }
     }
 
 
@@ -27,6 +30,7 @@ const Login = () => {
             <div className="form-container">
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
+                    {error && <p className="form-error" role="alert">{error}</p>}
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
                         <input

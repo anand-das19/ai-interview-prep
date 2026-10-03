@@ -89,7 +89,7 @@ This application helps job seekers prepare effectively for interviews by:
 - **Multer** - File upload handling
 
 ### **AI & Document Processing**
-- **Google Gemini AI** - AI model for content generation (gemini-3-flash-preview)
+- **Google Gemini AI** - AI model for content generation (gemini-2.0-flash)
 - **Puppeteer** - Headless browser for PDF generation
 - **pdf-parse** - PDF text extraction
 - **Zod** - Schema validation for AI responses
